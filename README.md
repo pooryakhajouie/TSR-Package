@@ -1,6 +1,6 @@
 # TSR Package
 
-**TSR Package** is a Python tool for retrieving Protein Data Bank (PDB) files and generating key/triplet files for protein structure analysis. This package allows for batch downloading of PDB files and processing them to extract key features.
+**TSR Package** is a Python tool for retrieving Protein Data Bank (PDB) files and generating key/triplet files for protein structure analysis.
 
 ## Table of Contents
 - [Installation](#installation)
