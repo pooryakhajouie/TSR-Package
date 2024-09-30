@@ -25,10 +25,28 @@ cd TSR-Package
 ```
 
 ### Installing the Package
-#### It's recommended to create a virtual environment:
+1. It's recommended to create a virtual environment:
 
 ```bash
 python3 -m venv tsrenv
 source tsrenv/bin/activate  # Mac/Linux
 tsrenv\Scripts\activate  # Windows
+```
+
+2. Install the package using pip:
+
+```bash
+pip install .
+```
+
+3. Alternatively, you can install the package from the built wheel:
+
+```bash
+pip install dist/tsr_package-0.1.0-py3-none-any.whl
+```
+
+4. Install the necessary dependencies:
+
+```bash
+pip install -r requirements.txt
 ```
