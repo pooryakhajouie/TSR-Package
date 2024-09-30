@@ -50,3 +50,15 @@ pip install dist/tsr_package-0.1.0-py3-none-any.whl
 ```bash
 pip install -r requirements.txt
 ```
+
+## Usage
+### Retrieve PDB Files
+To retrieve PDB files using the 'retrieve_pdb_files' function:
+
+```python
+from tsr_package.tsr.retrieve_pdb_files import retrieve_pdb_files
+
+# Retrieve PDB files for the specified PDB IDs
+pdb_ids = ['1GTA', '1GTB', '1LBE']
+retrieve_pdb_files('Dataset/', pdb_ids)
+```
