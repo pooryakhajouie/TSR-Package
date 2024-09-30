@@ -59,10 +59,10 @@ To retrieve PDB files using the `retrieve_pdb_files` function:
 from tsr_package.tsr.retrieve_pdb_files import retrieve_pdb_files
 
 # Retrieve PDB files for the specified PDB IDs
-pdb_ids = ['1GTA', '1GTB', '1LBE']
-retrieve_pdb_files('Dataset/', pdb_ids)
+pdb_ids = ["1GTA", "1GTB", "1lbe"]
+retrieve_pdb_files(pdb_ids, 'Dataset/')
 ```
-This will download the PDB files into the specified `Dataset/` directory.
+This will download the PDB files into the specified `Dataset/` directory. If the directory is not specified, the default directory for storing the PDB files would also be `Dataset/`.
 Protein IDs are not case-sensitive, so you may use lowercase and uppercase letters to address the proteins.
 
 ### Generate Keys and Triplets
@@ -81,6 +81,7 @@ output_option = "keys"  # choose 'keys', 'triplets', or 'both'. If none, the fun
 # Process protein data to generate key files
 process_protein_data(data_dir, input_files, chain=chain, output_option=output_option)
 ```
+Protein's chains are case-sensitive since there are chains with both lower and uppercase letters.
 
 ### Using a CSV file as Input
 You can pass a CSV file as input to process multiple PDB files with chain information. The CSV file should have the following format:
