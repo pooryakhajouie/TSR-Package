@@ -88,7 +88,7 @@ You can pass a CSV file as input to process multiple PDB files with chain inform
 
 |protein         |chain        |
 |----------------|-------------|
-|1GT             |A            |
+|1GTA            |A            |
 |1GTB            |A            |
 |1LBE            |A            |
 
