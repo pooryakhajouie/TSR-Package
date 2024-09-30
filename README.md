@@ -22,3 +22,13 @@ To get started with the `tsr_package`, clone the repository from GitHub:
 ```bash
 git clone https://github.com/pooryakhajouie/TSR-Package.git
 cd TSR-Package
+```
+
+### Installing the Package
+#### It's recommended to create a virtual environment:
+
+```bash
+python3 -m venv tsrenv
+source tsrenv/bin/activate  # Mac/Linux
+tsrenv\Scripts\activate  # Windows
+```
