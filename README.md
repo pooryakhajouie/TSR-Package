@@ -16,3 +16,9 @@
 ## Installation
 
 ### Cloning the Repository
+
+To get started with the `tsr_package`, clone the repository from GitHub:
+
+```bash
+git clone https://github.com/pooryakhajouie/TSR-Package.git
+cd TSR-Package
