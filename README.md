@@ -103,3 +103,46 @@ csv_file = "sample_details.csv"
 # Process the CSV input
 process_protein_data(data_dir, csv_file, output_option="keys")
 ```
+
+## Arguments
+- `data_dir`: Directory where the PDB files are located or where they will be downloaded.
+- `input_files`: A list of PDB IDs or the path to a CSV file containing protein IDs and chains.
+- `chain`: A list of chains corresponding to each PDB file (optional if using a CSV file).
+- `output_option`: Either "keys" to generate key files or "triplets" to generate triplet files.
+
+## Examples
+### Example 1: Retrieving PDB Files and Generating Keys
+
+```python
+from tsr_package.tsr.retrieve_pdb_files import retrieve_pdb_files
+from tsr_package.tsr.generate_keys_and_triplets import process_protein_data
+
+# Step 1: Retrieve PDB files
+data_dir = "Dataset/" # It is also the default directory if not declared
+pdb_ids = ["1GTA", "1gtb", "1lbe"] # Not case-sensitive
+chain = ["A", "A", "A"] # Case-sensitive
+retrieve_pdb_files(pdb_ids, data_dir)
+
+# Step 2: Generate key files for the proteins
+process_protein_data(data_dir, pdb_ids, chain=chain, output_option="keys") # Modify the output option as desired
+```
+
+### Example 2: Using CSV File for Input
+
+```python
+from tsr_package.tsr.generate_keys_and_triplets import process_protein_data
+
+# Use CSV input for batch processing
+data_dir = "Dataset/"
+csv_file = "sample_details.csv"
+process_protein_data(data_dir, csv_file, output_option="triplets")
+```
+
+## Contributing
+Contributions are welcome! If you'd like to improve this package, feel free to fork the repository and submit a pull request.
+
+1. Fork the repository
+2. Create a new branch (`git checkout -b feature-branch`)
+3. Commit your changes (`git commit -am 'Add new feature'`)
+4. Push the branch (`git push origin feature-branch`)
+5. Open a pull request
