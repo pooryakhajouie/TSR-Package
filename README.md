@@ -76,13 +76,13 @@ data_dir = "Dataset/"
 # Define the list of PDB files and corresponding chains
 input_files = ["1GTA", "1GTB", "1LBE"]
 chain = ["A", "A", "A"]  # specify chains for each PDB file
-output_option = "keys"  # choose either 'keys', 'triplets', or 'both'. If none. the function will generate both.
+output_option = "keys"  # choose 'keys', 'triplets', or 'both'. If none, the function will generate both.
 
 # Process protein data to generate key files
 process_protein_data(data_dir, input_files, chain=chain, output_option=output_option)
 ```
 
-### Using with CSV Input
+### Using a CSV file as Input
 You can pass a CSV file as input to process multiple PDB files with chain information. The CSV file should have the following format:
 
 |protein         |chain        |
@@ -146,3 +146,6 @@ Contributions are welcome! If you'd like to improve this package, feel free to f
 3. Commit your changes (`git commit -am 'Add new feature'`)
 4. Push the branch (`git push origin feature-branch`)
 5. Open a pull request
+
+## License
+This project is licensed under the MIT License - see the LICENSE file for details.
