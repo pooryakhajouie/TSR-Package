@@ -53,7 +53,7 @@ pip install -r requirements.txt
 
 ## Usage
 ### Retrieve PDB Files
-To retrieve PDB files using the 'retrieve_pdb_files' function:
+To retrieve PDB files using the `retrieve_pdb_files` function:
 
 ```python
 from tsr_package.tsr.retrieve_pdb_files import retrieve_pdb_files
@@ -61,4 +61,45 @@ from tsr_package.tsr.retrieve_pdb_files import retrieve_pdb_files
 # Retrieve PDB files for the specified PDB IDs
 pdb_ids = ['1GTA', '1GTB', '1LBE']
 retrieve_pdb_files('Dataset/', pdb_ids)
+```
+This will download the PDB files into the specified `Dataset/` directory.
+Protein IDs are not case-sensitive, so you may use lowercase and uppercase letters to address the proteins.
+
+### Generate Keys and Triplets
+To generate keys or triplet files for the proteins:
+
+```python
+from tsr_package.tsr.generate_keys_and_triplets import process_protein_data
+
+# Define the directory where PDB files are stored
+data_dir = "Dataset/"
+# Define the list of PDB files and corresponding chains
+input_files = ["1GTA", "1GTB", "1LBE"]
+chain = ["A", "A", "A"]  # specify chains for each PDB file
+output_option = "keys"  # choose either 'keys', 'triplets', or 'both'. If none. the function will generate both.
+
+# Process protein data to generate key files
+process_protein_data(data_dir, input_files, chain=chain, output_option=output_option)
+```
+
+### Using with CSV Input
+You can pass a CSV file as input to process multiple PDB files with chain information. The CSV file should have the following format:
+
+|protein         |chain        |
+|----------------|-------------|
+|1GT             |A            |
+|1GTB            |A            |
+|1LBE            |A            |
+
+To process the CSV file:
+
+```python
+from tsr_package.tsr.generate_keys_and_triplets import process_protein_data
+
+# Define the directory and CSV file path
+data_dir = "Dataset/"
+csv_file = "sample_details.csv"
+
+# Process the CSV input
+process_protein_data(data_dir, csv_file, output_option="keys")
 ```
