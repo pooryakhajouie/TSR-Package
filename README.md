@@ -62,6 +62,15 @@ from tsr_package.tsr.retrieve_pdb_files import retrieve_pdb_files
 pdb_ids = ["1GTA", "1GTB", "1lbe"]
 retrieve_pdb_files(pdb_ids, 'Dataset/')
 ```
+Or you can use a CSV file to download the PDB files:
+```python
+from tsr_package.tsr.retrieve_pdb_files import retrieve_pdb_files
+
+data_dir = "Dataset/"
+csv_file = "sample_details.csv"
+retrieve_pdb_files(csv_file, data_dir)
+```
+
 This will download the PDB files into the specified `Dataset/` directory. If the directory is not specified, the default directory for storing the PDB files would also be `Dataset/`.
 Protein IDs are not case-sensitive, so you may use lowercase and uppercase letters to address the proteins.
 
@@ -131,6 +140,7 @@ process_protein_data(data_dir, pdb_ids, chain=chain, output_option="keys") # Mod
 ### Example 2: Using CSV File for Input
 
 ```python
+from tsr_package.tsr.retrieve_pdb_files import retrieve_pdb_files
 from tsr_package.tsr.generate_keys_and_triplets import process_protein_data
 
 # Use CSV input for batch processing
