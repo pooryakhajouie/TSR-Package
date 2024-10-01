@@ -136,6 +136,7 @@ from tsr_package.tsr.generate_keys_and_triplets import process_protein_data
 # Use CSV input for batch processing
 data_dir = "Dataset/"
 csv_file = "sample_details.csv"
+retrieve_pdb_files(csv_file, data_dir)
 process_protein_data(data_dir, csv_file, output_option="triplets")
 ```
 
