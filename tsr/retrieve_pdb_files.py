@@ -8,7 +8,7 @@ import os
 def download_pdb(fname, out_dir):
     print(f"Downloading {fname}...")
     try:
-        urllib.request.urlretrieve(f'http://files.rcsb.org/download/{fname}.pdb', os.path.join(out_dir, f'{fname}.pdb'))
+        urllib.request.urlretrieve(f'http://files.rcsb.org/download/{fname.upper()}.pdb', os.path.join(out_dir, f'{fname.upper()}.pdb'))
         print(f"Downloaded: {fname}")
     except urllib.error.HTTPError as e:
         if e.code == 404:

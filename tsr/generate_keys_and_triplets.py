@@ -18,6 +18,12 @@ aminoAcidLabel = {
     'ARG': 22, 'ASN': 23
 }
 
+aminoAcidGroup = {
+    'ASP':	4, 'GLU':	4, 'ASN':	5, 'GLN':	5, 'GLY':	6, 'ALA':	7, 'VAL':	7,
+    'LEU':	8, 'ILE':	8, 'PRO':	9, 'PHE':	10, 'TRP':	10, 'TYR':	11, 'SER':	12,
+    'THR':	12, 'CYS':	13, 'MET':	14, 'HIS':	15, 'LYS':	16, 'ARG':	16
+}
+
 # Classify theta angles into predefined classes
 def thetaClass_(Theta):
     theta_bins = [12.11, 17.32, 21.53, 25.21, 28.54, 31.64, 34.55, 37.34, 40.03, 42.64, 
@@ -58,7 +64,16 @@ def indexFind(index_of_2,i1,j1,k1):
     return indexOf0, indexOf1
 
 # Parallel key and triplet file generation function
-def generate_keys_and_triplets(data_dir, file_name, chain, output_subdir, output_option='both'):
+def generate_keys_and_triplets(data_dir, file_name, chain, output_subdir, output_option='both',
+                               aa_grouping=False, mirror_image=False, size_filter=10000):
+
+    if aa_grouping:
+        aminoAcidDict = aminoAcidGroup
+        print("Using amino acid group labels.")
+    else:
+        aminoAcidDict = aminoAcidLabel
+        print("Using standard amino acid labels.")
+
     inFile = open(f'{data_dir}{file_name.upper()}.pdb', 'r')
     outFile2 = open(f'{data_dir}{output_subdir}/{file_name.upper()}.keys_29_35', "w") if output_option in ['both', 'keys'] else None
     fileTriplets = open(f'{data_dir}{output_subdir}/{file_name.upper()}.triplets_29_35', "w") if output_option in ['both', 'triplets'] else None
@@ -78,7 +93,7 @@ def generate_keys_and_triplets(data_dir, file_name, chain, output_subdir, output
         if line.startswith("MODEL") and int(line[10:14].strip()) > 1:
             break
         if line.startswith("ATOM") and line[13:15].strip() == "CA" and (line[16] == 'A' or line[16] == ' ') and line[21:22].strip() == chain and line[17:20] != "UNK":
-            aminoAcidName[counter] = aminoAcidLabel[line[17:20].strip()]
+            aminoAcidName[counter] = aminoAcidDict[line[17:20].strip()]
             xCord[counter] = float(line[30:38])
             yCord[counter] = float(line[38:46])
             zCord[counter] = float(line[46:54])
@@ -164,46 +179,51 @@ def generate_keys_and_triplets(data_dir, file_name, chain, output_subdir, output
                 dist12=dist01
                 dist03=calcDist(indexOf1,indexOf2)
                 maxDist=max(dist01,dist02,dist03)
-                s3=(((xCord[indexOf0]+xCord[indexOf1])/2-xCord[indexOf2])**2+((yCord[indexOf0]+yCord[indexOf1])/2-yCord[indexOf2])**2+((zCord[indexOf0]+zCord[indexOf1])/2-zCord[indexOf2])**2)**0.5
-                Theta1=180*(math.acos((s1**2-s2**2-s3**2)/(2*s2*s3)))/3.14
-                if Theta1<=90:
-                    Theta=Theta1
-                else:
-                    Theta=abs(180-Theta1)
-                classT1=thetaClass_(Theta)
-                classL1=dist12Class_(maxDist)
 
-                position0 = str(list(seq_number.values())[indexOf0])
-                position1 = str(list(seq_number.values())[indexOf1])
-                position2 = str(list(seq_number.values())[indexOf2])
+                if maxDist<size_filter:
+                    s3=(((xCord[indexOf0]+xCord[indexOf1])/2-xCord[indexOf2])**2+((yCord[indexOf0]+yCord[indexOf1])/2-yCord[indexOf2])**2+((zCord[indexOf0]+zCord[indexOf1])/2-zCord[indexOf2])**2)**0.5
+                    Theta1=180*(math.acos((s1**2-s2**2-s3**2)/(2*s2*s3)))/3.14
+                    if Theta1<=90:
+                        Theta=Theta1
+                    else:
+                        Theta=abs(180-Theta1)
+                    classT1=thetaClass_(Theta)
+                    classL1=dist12Class_(maxDist)
 
-                aacd0 = list(aminoAcidLabel.keys())[list(aminoAcidLabel.values()).index(aminoAcidName[indexOf0])]
-                aacd1 = list(aminoAcidLabel.keys())[list(aminoAcidLabel.values()).index(aminoAcidName[indexOf1])]
-                aacd2 = list(aminoAcidLabel.keys())[list(aminoAcidLabel.values()).index(aminoAcidName[indexOf2])]
+                    position0 = str(list(seq_number.values())[indexOf0])
+                    position1 = str(list(seq_number.values())[indexOf1])
+                    position2 = str(list(seq_number.values())[indexOf2])
 
-                x0 = str(xCord.get(indexOf0))
-                y0 = str(yCord.get(indexOf0))
-                z0 = str(zCord.get(indexOf0))
+                    aacd0 = list(aminoAcidDict.keys())[list(aminoAcidDict.values()).index(aminoAcidName[indexOf0])]
+                    aacd1 = list(aminoAcidDict.keys())[list(aminoAcidDict.values()).index(aminoAcidName[indexOf1])]
+                    aacd2 = list(aminoAcidDict.keys())[list(aminoAcidDict.values()).index(aminoAcidName[indexOf2])]
 
-                x1 = str(xCord.get(indexOf1))
-                y1 = str(yCord.get(indexOf1))
-                z1 = str(zCord.get(indexOf1))
+                    x0 = str(xCord.get(indexOf0))
+                    y0 = str(yCord.get(indexOf0))
+                    z0 = str(zCord.get(indexOf0))
 
-                x2 = str(xCord.get(indexOf2))
-                y2 = str(yCord.get(indexOf2))
-                z2 = str(zCord.get(indexOf2))
+                    x1 = str(xCord.get(indexOf1))
+                    y1 = str(yCord.get(indexOf1))
+                    z1 = str(zCord.get(indexOf1))
 
-                key_2=dLen*dTheta*(numOfLabels**2)*(aminoAcidName[indexOf0]-1)+dLen*dTheta*(numOfLabels)*(aminoAcidName[indexOf1]-1)+dLen*dTheta*(aminoAcidName[indexOf2]-1)+dTheta*(classL1-1)+(classT1-1)
-                
-                if key_2 in filesDict:
-                    filesDict[key_2]+=1
-                else:
-                    filesDict[key_2]=1
+                    x2 = str(xCord.get(indexOf2))
+                    y2 = str(yCord.get(indexOf2))
+                    z2 = str(zCord.get(indexOf2))
 
-                # Write to triplets file if needed
-                if output_option in ['both', 'triplets'] and fileTriplets:
-                    line = f"{key_2}\t{aacd0}\t{position0}\t{aacd1}\t{position1}\t{aacd2}\t{position2}\t{classT1}\t{Theta}\t{classL1}\t{maxDist}\t{xCord[indexOf0]}\t{yCord[indexOf0]}\t{zCord[indexOf0]}\t{xCord[indexOf1]}\t{yCord[indexOf1]}\t{zCord[indexOf1]}\t{xCord[indexOf2]}\t{yCord[indexOf2]}\t{zCord[indexOf2]}\n"
-                    fileTriplets.writelines(line)
+                    key_2=dLen*dTheta*(numOfLabels**2)*(aminoAcidName[indexOf0]-1)+dLen*dTheta*(numOfLabels)*(aminoAcidName[indexOf1]-1)+dLen*dTheta*(aminoAcidName[indexOf2]-1)+dTheta*(classL1-1)+(classT1-1)
+                    
+                    if mirror_image and Theta1 > 90:
+                        key_2 = (-1) * key_2
+
+                    if key_2 in filesDict:
+                        filesDict[key_2]+=1
+                    else:
+                        filesDict[key_2]=1
+
+                    # Write to triplets file if needed
+                    if output_option in ['both', 'triplets'] and fileTriplets:
+                        line = f"{key_2}\t{aacd0}\t{position0}\t{aacd1}\t{position1}\t{aacd2}\t{position2}\t{classT1}\t{Theta}\t{classL1}\t{maxDist}\t{xCord[indexOf0]}\t{yCord[indexOf0]}\t{zCord[indexOf0]}\t{xCord[indexOf1]}\t{yCord[indexOf1]}\t{zCord[indexOf1]}\t{xCord[indexOf2]}\t{yCord[indexOf2]}\t{zCord[indexOf2]}\n"
+                        fileTriplets.writelines(line)
 
     # Write to keys file if needed
     if output_option in ['both', 'keys'] and outFile2:
@@ -218,7 +238,7 @@ def generate_keys_and_triplets(data_dir, file_name, chain, output_subdir, output
     inFile.close()
 
 # Main function to handle input and output
-def process_protein_data(data_dir, input_files, chain=None, output_option='both', output_subdir='lexiographic'):
+def TSR(data_dir, input_files, chain=None, output_option='both', output_subdir='lexiographic', aa_grouping=False, mirror_image=False, size_filter=10000):
     os.makedirs(os.path.join(data_dir, output_subdir), exist_ok=True)
     chain_dict = {}
     # Handle single file input
@@ -239,6 +259,6 @@ def process_protein_data(data_dir, input_files, chain=None, output_option='both'
 
     # Parallel processing
     Parallel(n_jobs=num_cores, verbose=50)(
-        delayed(generate_keys_and_triplets)(data_dir, file_name.upper(), chain_dict.get(file_name.upper(), chain), output_subdir, output_option)
+        delayed(generate_keys_and_triplets)(data_dir, file_name.upper(), chain_dict.get(file_name.upper(), chain), output_subdir, output_option, aa_grouping, mirror_image, size_filter)
         for file_name in input_files
     )
