@@ -75,7 +75,7 @@ def generate_keys_and_triplets(data_dir, file_name, chain, output_subdir, output
         print("Using standard amino acid labels.")
 
     inFile = open(f'{data_dir}{file_name.upper()}.pdb', 'r')
-    outFile2 = open(f'{data_dir}{output_subdir}/{file_name.upper()}.keys_29_35', "w") if output_option in ['both', 'keys'] else None
+    outFile2 = open(f'{data_dir}{output_subdir}/{file_name.upper()}.3Dkeys_29_35', "w") if output_option in ['both', 'keys'] else None
     fileTriplets = open(f'{data_dir}{output_subdir}/{file_name.upper()}.triplets_29_35', "w") if output_option in ['both', 'triplets'] else None
 
     global xCord, yCord, zCord
