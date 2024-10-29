@@ -1,3 +1,4 @@
 pandas
+biopython
 numpy
 joblib

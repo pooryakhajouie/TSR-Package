@@ -29,7 +29,7 @@ def read_pdb_from_file(filename):
     return df['protein'].tolist()
 
 # Main function that takes a single PDB ID, list of IDs, or filename with IDs
-def retrieve_pdb_files(input_data, out_dir='Dataset/'):
+def PDB_DL(input_data, out_dir='Dataset/'):
     if isinstance(input_data, str):
         if os.path.isfile(input_data):
             # If input_data is a filename, read the list from the file

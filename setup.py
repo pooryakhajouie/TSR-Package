@@ -7,6 +7,7 @@ setup(
     install_requires=[
         'pandas',
         'numpy',
+        'biopython',
         'joblib',
     ],
     author='Poorya Khajouie',
