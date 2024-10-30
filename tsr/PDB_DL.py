@@ -48,3 +48,14 @@ def PDB_DL(input_data, out_dir='Dataset/'):
 
     # Download the PDB files
     download_pdb_files(protein_list, out_dir)
+
+'''
+Example usage:
+input_files = ["1GTA", "1gtb", "1lbe"]
+PDB_DL(input_files)
+
+OR
+
+csv_file = "sample_details.csv"
+PDB_DL(csv_file)
+'''

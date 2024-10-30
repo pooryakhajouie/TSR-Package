@@ -74,9 +74,9 @@ def generate_keys_and_triplets(data_dir, file_name, chain, output_subdir, output
         aminoAcidDict = aminoAcidLabel
         print("Using standard amino acid labels.")
 
-    inFile = open(f'{data_dir}{file_name.upper()}.pdb', 'r')
-    outFile2 = open(f'{data_dir}{output_subdir}/{file_name.upper()}.3Dkeys_29_35', "w") if output_option in ['both', 'keys'] else None
-    fileTriplets = open(f'{data_dir}{output_subdir}/{file_name.upper()}.triplets_29_35', "w") if output_option in ['both', 'triplets'] else None
+    inFile = open(f'{data_dir}/{file_name.upper()}.pdb', 'r')
+    outFile2 = open(f'{data_dir}/{output_subdir}/{file_name.upper()}.3Dkeys_29_35', "w") if output_option in ['both', 'keys'] else None
+    fileTriplets = open(f'{data_dir}/{output_subdir}/{file_name.upper()}.triplets_29_35', "w") if output_option in ['both', 'triplets'] else None
 
     global xCord, yCord, zCord
     aminoAcidName={}
@@ -238,7 +238,7 @@ def generate_keys_and_triplets(data_dir, file_name, chain, output_subdir, output
     inFile.close()
 
 # Main function to handle input and output
-def TSR(data_dir, input_files, chain=None, output_option='both', output_subdir='lexiographic', aa_grouping=False, mirror_image=False, size_filter=10000):
+def TSR(data_dir, input_files, chain=None, output_option='both', output_subdir='lexicographic', aa_grouping=False, mirror_image=False, size_filter=10000):
     os.makedirs(os.path.join(data_dir, output_subdir), exist_ok=True)
     chain_dict = {}
     # Handle single file input
@@ -262,3 +262,20 @@ def TSR(data_dir, input_files, chain=None, output_option='both', output_subdir='
         delayed(generate_keys_and_triplets)(data_dir, file_name.upper(), chain_dict.get(file_name.upper(), chain), output_subdir, output_option, aa_grouping, mirror_image, size_filter)
         for file_name in input_files
     )
+
+    '''
+Example Usage:
+data_dir = "Dataset"
+input_files = ["1GTA", "1gtb", "1lbe"]
+chain = ["A", "A", "A"]
+output_option = "both"
+PDB_DL(input_files)
+TSR(data_dir, input_files, chain=chain, output_option=output_option, aa_grouping=False, mirror_image=False, size_filter=10000)
+
+OR
+
+data_dir = "Dataset"
+csv_file = "sample_details.csv"
+PDB_DL(csv_file)
+TSR(data_dir, csv_file, output_option="keys")
+    '''

@@ -77,10 +77,10 @@ def process_pdb_file(data_dir, pdb_file, chain_name, drug_name, drug_id, output_
     keyDict3D = {}
 
     if output_option in ['triplets', 'both']:
-        outputFile1 = open(f'{data_dir}/{output_subdir}/{os.path.basename(pdb_file)}_{chain_name}_H.triplets_theta29_dist17', 'w')
+        outputFile1 = open(f'{data_dir}/{output_subdir}/{os.path.basename(pdb_file)}_{chain_name}.drug_triplets_29_17', 'w')
         outputFile1.writelines('Residue1   Residue2   Residue3   Edge1  Edge2  Edge3\t   Coor_R1\t           Coor_R2\t         CoorR3\tTheta\tmax_dist\td_3\tkey3D\n')
     if output_option in ['keys', 'both']:
-        outputFile2 = open(f'{data_dir}/{output_subdir}/{os.path.basename(pdb_file)}_{chain_name}_H.keys_theta29_dist17', 'w')
+        outputFile2 = open(f'{data_dir}/{output_subdir}/{os.path.basename(pdb_file)}_{chain_name}.drug_keys_29_17', 'w')
         outputFile2.writelines('key\t\tfreq\n')
 
     counter2 = 0
@@ -630,7 +630,9 @@ pdb_files = ['4CI2', '4ci1']
 chain=['B', 'B']
 drug_name=['LVY', 'EF2']
 drug_id=['1429', '21429']
+PDB_DL(pdb_files)
 DrugTSR(data_dir, input_files=pdb_files, chain=chain, drug_name=drug_name, drug_id=drug_id, output_option='both')
 
 csv_file = 'sample_details_six_cancer_drugs.csv'
+PDB_DL(csv_file)
 DrugTSR(data_dir, input_files=csv_file, output_option='both')'''

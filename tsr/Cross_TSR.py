@@ -86,11 +86,11 @@ def process_pdb_file(data_dir, pdb_file, chain1, chain2, output_subdir, output_o
 
     # Create output files based on output_options
     if output_option in ['triplets', 'both']:
-        outputFile1 = open(f'{data_dir}/{output_subdir}/{os.path.basename(pdb_file)}_{chain1}_{chain2}_H.triplets_theta29_dist17', 'w')
+        outputFile1 = open(f'{data_dir}/{output_subdir}/{os.path.basename(pdb_file)}_{chain1}_{chain2}.cross_triplets_29_17', 'w')
         outputFile1.writelines('Residue1   Residue2   Residue3   Edge1  Edge2  Edge3\t   Coor_R1\t           Coor_R2\t         CoorR3\t         Theta\tmax_dist\td_3\tkey3D label1 label2 label3 BinLength BinTheta d12 d13\n')
 
     if output_option in ['keys', 'both']:
-        outputFile2 = open(f'{data_dir}/{output_subdir}/{os.path.basename(pdb_file)}_{chain1}_{chain2}_H.keys_theta29_dist17', 'w')
+        outputFile2 = open(f'{data_dir}/{output_subdir}/{os.path.basename(pdb_file)}_{chain1}_{chain2}.cross_keys_29_17', 'w')
         outputFile2.writelines('key\t\tfreq\n')
 
     Chain1_counter = Chain2_counter = 0
@@ -154,9 +154,6 @@ def process_pdb_file(data_dir, pdb_file, chain1, chain2, output_subdir, output_o
 
     Antib_Num = len(chain1_Inter_Atom_Pos)
     Spike_Num = len(chain2_Inter_Atom_Pos)
-
-    print(f'antibody:{Antib_Num}\n')
-    print(f'Spike:{Spike_Num}\n')
 
     # Calculates keys between two spike Protein  atom  and one antibody atom
     c = 0
@@ -621,7 +618,7 @@ def process_pdb_file(data_dir, pdb_file, chain1, chain2, output_subdir, output_o
         outputFile2.close()
 
 # Main function to handle input and output for CrossTSR
-def CrossTSR(data_dir, input_files, chain_1=None, chain_2=None, output_option='both', output_subdir='lexiographic'):
+def CrossTSR(data_dir, input_files, chain_1=None, chain_2=None, output_option='both', output_subdir='lexicographic'):
     os.makedirs(os.path.join(data_dir, output_subdir), exist_ok=True)
     chain_dict_1, chain_dict_2 = {}, {}
 
@@ -652,11 +649,13 @@ def CrossTSR(data_dir, input_files, chain_1=None, chain_2=None, output_option='b
 
 '''
 Example usage:
-data_dir = "Dataset"
-pdb_files = ["6W41", "6XC3"]
+data_dir = 'Dataset'
+pdb_files = ['6W41', '6XC3']
 chain_1=['C', 'C']
 chain_2=['H', 'C']
+PDB_DL(pdb_files)
 CrossTSR(data_dir, pdb_files, chain_1=chain_1, chain_2=chain_2, output_option='both')
 
 csv_file = 'sample_details.csv'
+PDB_DL(csv_file)
 CrossTSR(data_dir, csv_file, output_option='triplets')'''

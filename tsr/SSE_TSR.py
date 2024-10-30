@@ -1,4 +1,3 @@
-# -*- coding: utf-8 -*-
 import os
 import math
 import multiprocessing
@@ -69,7 +68,7 @@ def seperate_helix_sheet_chain(file, data_dir):
     sheet_dict={}
 
     # read file for helix and sheet
-    with open(data_dir+file+'.pdb', 'r') as f:
+    with open(f'{data_dir}/{file.upper()}.pdb', 'r') as f:
         for line in f:
             if line[0:6].strip()=='HELIX':
                 serNum=line[7:10].strip()
@@ -93,8 +92,8 @@ def seperate_helix_sheet_chain(file, data_dir):
                     if pos1 not in sheet_dict:
                         sheet_dict[pos1]='SHEET_'+str(serNum)
 
-    fh=open(data_dir+file+"_helix_dict.pkl","wb")
-    fs=open(data_dir+file+"_sheet_dict.pkl","wb")
+    fh=open(f'{data_dir}/{file.upper()}_helix_dict.pkl',"wb")
+    fs=open(f'{data_dir}/{file.upper()}_sheet_dict.pkl',"wb")
     pickle.dump(helix_dict,fh)
     pickle.dump(sheet_dict,fs)
     fh.close()
@@ -206,12 +205,12 @@ def generate_keys_and_triplets_ss_info(data_dir, file_name, chain, output_subdir
     filesDict3D={}
     filesDict1D={}
     types = [0] * 18  # array of len 18 to save 18 type combination of helix/sheet for each key, each element of array is freq of key i of type j
-    if not os.path.exists(data_dir+file_name+'.pdb'):
+    if not os.path.exists(f'{data_dir}/{file_name.upper()}.pdb'):
         pass
-    inFile=open(data_dir+file_name+'.pdb','r')
+    inFile=open(f'{data_dir}/{file_name.upper()}.pdb','r')
 
-    fileKey3D = open(f'{data_dir}{output_subdir}/{file_name.upper()}.3Dkeys_29_35', "w") if output_option in ['both', 'keys'] else None
-    fileTriplets = open(f'{data_dir}{output_subdir}/{file_name.upper()}.triplets_29_35_sse', "w") if output_option in ['both', 'triplets'] else None
+    fileKey3D = open(f'{data_dir}/{output_subdir}/{file_name.upper()}.3Dkeys_29_35_SSE', "w") if output_option in ['both', 'keys'] else None
+    fileTriplets = open(f'{data_dir}/{output_subdir}/{file_name.upper()}.triplets_29_35_SSE', "w") if output_option in ['both', 'triplets'] else None
 
     # Write Header !
     fileKey3D.writelines("key3D\t1_3a1\t2_3a2\t3_3a3\t4_2a11c\t5_2a21c\t6_1a2c \t7_3b1\t8_3b2\t9_3b3\t10_2b11c\t11_2b21c\t12_1b2c\t13_2a21b\t14_2a11b\t15_2b21a\t16_2b11a\t17_3c\t18_1a1b1c\n")
@@ -224,8 +223,8 @@ def generate_keys_and_triplets_ss_info(data_dir, file_name, chain, output_subdir
     zCord={}
     seq_number={}
     counter=0
-    helix_dict=pickle.load(open(data_dir+file_name+"_helix_dict.pkl","rb"))
-    sheet_dict=pickle.load(open(data_dir+file_name+"_sheet_dict.pkl","rb"))
+    helix_dict=pickle.load(open(f'{data_dir}/{file_name.upper()}_helix_dict.pkl',"rb"))
+    sheet_dict=pickle.load(open(f'{data_dir}/{file_name.upper()}_sheet_dict.pkl',"rb"))
 
     for i in inFile:
         if ((i[0:6].rstrip()=="ENDMDL") or (i[0:6].rstrip()=='TER' and i[21].rstrip()==chain)):
@@ -406,11 +405,11 @@ def generate_keys_and_triplets_ss_info(data_dir, file_name, chain, output_subdir
 
     fileKey3D.close()
     fileTriplets.close()
-    os.remove(data_dir+file_name+"_helix_dict.pkl")
-    os.remove(data_dir+file_name+"_sheet_dict.pkl")
+    os.remove(f'{data_dir}/{file_name.upper()}_helix_dict.pkl')
+    os.remove(f'{data_dir}/{file_name.upper()}_sheet_dict.pkl')
 
 # Main function to handle input and output
-def SSETSR(data_dir, input_files, chain=None, output_option='both', output_subdir='lexiographic', aa_grouping=False, mirror_image=False, size_filter=10000):
+def SSETSR(data_dir, input_files, chain=None, output_option='both', output_subdir='lexicographic', aa_grouping=False, mirror_image=False, size_filter=10000):
     os.makedirs(os.path.join(data_dir, output_subdir), exist_ok=True)
     chain_dict = {}
     # Handle single file input
@@ -434,3 +433,21 @@ def SSETSR(data_dir, input_files, chain=None, output_option='both', output_subdi
         delayed(generate_keys_and_triplets_ss_info)(data_dir, file_name.upper(), chain_dict.get(file_name.upper(), chain), output_subdir, output_option, aa_grouping, mirror_image, size_filter)
         for file_name in input_files
     )
+
+'''
+Example Usage:
+
+data_dir = "Dataset"
+input_files = ["1GTA", "1gtb", "1lbe"]
+chain = ["A", "A", "A"]
+output_option = "both"
+PDB_DL(input_files)
+SSETSR(data_dir, input_files, chain=chain, output_option=output_option, aa_grouping=False, mirror_image=False, size_filter=10000)
+
+OR
+
+data_dir = "Dataset"
+csv_file = "sample_details.csv"
+PDB_DL(csv_file) 
+SSETSR(data_dir, csv_file, output_option="keys")
+'''
