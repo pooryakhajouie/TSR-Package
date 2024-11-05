@@ -105,7 +105,7 @@ Besides the basic TSR function, the package provides specialized TSR functions f
 Each of these functions can be customized using the same directory structure and options as the core TSR function.
 
 
-### Using a CSV file as Input
+### Using a CSV file as Input for TSR and SSETSR
 You can pass a CSV file as input to process multiple PDB files with chain information. The CSV file should have the following format:
 
 |protein         |chain        |
@@ -113,6 +113,27 @@ You can pass a CSV file as input to process multiple PDB files with chain inform
 |1GTA            |A            |
 |1GTB            |A            |
 |1LBE            |A            |
+
+### Using a CSV file as Input for CrossTSR
+For `CrossTSR`, you can pass a CSV file to specify pairs of chains for cross-protein interactions. The CSV file should have the following format:
+
+| protein       | chain1 | chain2 |
+|---------------|--------|--------|
+| 5L2I          | A      | B      |
+| 2EUF          | A      | C      |
+| 3ABC          | B      | D      |
+
+### Using a CSV file as Input for DrugTSR
+For `DrugTSR`, you can pass a CSV file to specify protein-drug interactions, including protein, chain, drug name, and drug ID. The CSV file should have the following format:
+
+| protein       | chain  | drug_name | drug_id |
+|---------------|--------|-----------|---------|
+| 4CI2          | B      | LVY       | 1429    |
+| 5XYZ          | A      | LQQ       | 21429   |
+| 1ABC          | C      | EF2       | 402     |
+
+
+These CSV formats allow you to use `CrossTSR` and `DrugTSR` with multiple proteins and their corresponding chain or drug details for batch processing.
 
 To process the CSV file:
 
@@ -125,6 +146,9 @@ csv_file = "sample_details.csv"
 
 # Process the CSV input
 TSR(data_dir, csv_file, output_option="keys")
+SSETSR(data_dir, csv_file, output_option="triplets")
+CrossTSR(data_dir, csv_file, output_option="both")
+DrugTSR(data_dir, csv_file) #output_options is set to both as a default
 ```
 
 ## Arguments
