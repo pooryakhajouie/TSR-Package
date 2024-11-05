@@ -166,6 +166,9 @@ Additional arguments specific to each function may be found in the detailed docu
 ```python
 from tsr_package.tsr.PDB_DL import PDB_DL
 from tsr_package.tsr.TSR import TSR
+from tsr_package.tsr.SSETSR import SSETSR
+from tsr_package.tsr.CrossTSR import CrossTSR
+from tsr_package.tsr.DrugTSR import DrugTSR
 
 # Step 1: Retrieve PDB files
 data_dir = "Dataset" # It is also the default directory if not declared
@@ -198,17 +201,21 @@ DrugTSR(data_dir, pdb_drug, chain=drug_chain, drug_name=drug_name, drug_id=drug_
 ```python
 from tsr_package.tsr.PDB_DL import PDB_DL
 from tsr_package.tsr.TSR import TSR
+from tsr_package.tsr.SSETSR import SSETSR
+from tsr_package.tsr.CrossTSR import CrossTSR
+from tsr_package.tsr.DrugTSR import DrugTSR
 
 # Use CSV input for batch processing
 data_dir = "Dataset"
-csv_file = "sample_details.csv"
-
+csv_tsr = "sample_details.csv"
+csv_cross = "sample_details_cross.csv"
+csv_drug = "sample_details_drug.csv"
 PDB_DL(csv_file, data_dir)
 
-TSR(data_dir, csv_file, output_option="triplets")
-SSETSR(data_dir, csv_file, output_option="triplets")
-CrossTSR(data_dir, csv_file, output_option="both")
-DrugTSR(data_dir, csv_file) #output_options is set to both as a default
+TSR(data_dir, csv_tsr, output_option="triplets")
+SSETSR(data_dir, csv_tsr, output_option="triplets")
+CrossTSR(data_dir, csv_cross, output_option="both")
+DrugTSR(data_dir, csv_drug) #output_options is set to both as a default
 ```
 
 ## Contributing
