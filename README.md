@@ -146,9 +146,6 @@ csv_file = "sample_details.csv"
 
 # Process the CSV input
 TSR(data_dir, csv_file, output_option="keys")
-SSETSR(data_dir, csv_file, output_option="triplets")
-CrossTSR(data_dir, csv_file, output_option="both")
-DrugTSR(data_dir, csv_file) #output_options is set to both as a default
 ```
 
 ## Arguments
@@ -172,12 +169,28 @@ from tsr_package.tsr.TSR import TSR
 
 # Step 1: Retrieve PDB files
 data_dir = "Dataset" # It is also the default directory if not declared
+
 pdb_ids = ["1GTA", "1gtb", "1lbe"] # Not case-sensitive
 chain = ["A", "A", "A"] # Case-sensitive
+
+pdb_cross = ['6W41', '6XC3']
+chain_1=['C', 'C']
+chain_2=['H', 'C']
+
+pdb_drug = ['4CI2', '4ci1']
+drug_chain=['B', 'B']
+drug_name=['LVY', 'EF2']
+drug_id=['1429', '21429']
+
 PDB_DL(pdb_ids, data_dir)
+PDB_DL(pdb_cross, data_dir)
+PDB_DL(pdb_drug, data_dir)
 
 # Step 2: Generate key files for the proteins
 TSR(data_dir, pdb_ids, chain=chain, output_option="keys") # Modify the output option as desired
+SSETSR(data_dir, pdb_ids, chain=chain, output_option="keys")
+CrossTSR(data_dir, pdb_cross, chain_1=chain_1, chain_2=chain_2, output_option='triplets')
+DrugTSR(data_dir, pdb_drug, chain=drug_chain, drug_name=drug_name, drug_id=drug_id, output_option='both')
 ```
 
 ### Example 2: Using CSV File for Input
@@ -189,8 +202,13 @@ from tsr_package.tsr.TSR import TSR
 # Use CSV input for batch processing
 data_dir = "Dataset"
 csv_file = "sample_details.csv"
+
 PDB_DL(csv_file, data_dir)
+
 TSR(data_dir, csv_file, output_option="triplets")
+SSETSR(data_dir, csv_file, output_option="triplets")
+CrossTSR(data_dir, csv_file, output_option="both")
+DrugTSR(data_dir, csv_file) #output_options is set to both as a default
 ```
 
 ## Contributing
