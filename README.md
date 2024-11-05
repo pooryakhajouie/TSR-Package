@@ -7,6 +7,7 @@
 - [Usage](#usage)
   - [Retrieve PDB Files](#retrieve-pdb-files)
   - [Generate Keys and Triplets](#generate-keys-and-triplets)
+  - [Additional TSR Functions](#additional_tsr_functions)
   - [Using with CSV Input](#using-with-csv-input)
 - [Arguments](#arguments)
 - [Examples](#examples)
