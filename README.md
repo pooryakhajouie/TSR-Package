@@ -40,10 +40,11 @@ tsrenv\Scripts\activate  # Windows
 pip install .
 ```
 
-3. Alternatively, you can install the package from the built wheel:
+3. Alternatively, you can install the package from the built wheel, but first, you should build the distribution files:
 
 ```bash
-pip install dist/tsr_package-0.1.0-py3-none-any.whl
+python setup.py sdist bdist_wheel
+pip install dist/tsr_package-0.1.1-py3-none-any.whl
 ```
 
 4. Install the necessary dependencies:
