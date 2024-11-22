@@ -58,7 +58,7 @@ pip install -r requirements.txt
 To retrieve PDB files using the `PDB_DL` function:
 
 ```python
-from tsr_package.tsr.PDB_DL import PDB_DL
+from tsr_package.PDB_DL import PDB_DL
 
 # Retrieve PDB files for the specified PDB IDs
 pdb_ids = ["1GTA", "1GTB", "1lbe"]
@@ -66,7 +66,7 @@ PDB_DL(pdb_ids, 'Dataset/')
 ```
 Or you can use a CSV file to download the PDB files:
 ```python
-from tsr_package.tsr.PDB_DL import PDB_DL
+from tsr_package.PDB_DL import PDB_DL
 
 data_dir = "Dataset"
 csv_file = "sample_details.csv"
@@ -80,7 +80,7 @@ Protein IDs are not case-sensitive, so you may use lowercase and uppercase lette
 To generate keys or triplet files for the proteins:
 
 ```python
-from tsr_package.tsr.TSR import TSR
+from tsr_package.TSR import TSR
 
 # Define the directory where PDB files are stored
 data_dir = "Dataset"
@@ -140,7 +140,7 @@ These CSV formats allow you to use `CrossTSR` and `DrugTSR` with multiple protei
 To process the CSV file:
 
 ```python
-from tsr_package.tsr.TSR import TSR
+from tsr_package.TSR import TSR
 
 # Define the directory and CSV file path
 data_dir = "Dataset"
@@ -166,11 +166,11 @@ Additional arguments specific to each function may be found in the detailed docu
 ### Example 1: Retrieving PDB Files and Generating Keys
 
 ```python
-from tsr_package.tsr.PDB_DL import PDB_DL
-from tsr_package.tsr.TSR import TSR
-from tsr_package.tsr.SSETSR import SSETSR
-from tsr_package.tsr.CrossTSR import CrossTSR
-from tsr_package.tsr.DrugTSR import DrugTSR
+from tsr_package.PDB_DL import PDB_DL
+from tsr_package.TSR import TSR
+from tsr_package.SSETSR import SSETSR
+from tsr_package.CrossTSR import CrossTSR
+from tsr_package.DrugTSR import DrugTSR
 
 # Step 1: Retrieve PDB files
 data_dir = "Dataset" # It is also the default directory if not declared
@@ -201,11 +201,11 @@ DrugTSR(data_dir, pdb_drug, chain=drug_chain, drug_name=drug_name, drug_id=drug_
 ### Example 2: Using CSV File for Input
 
 ```python
-from tsr_package.tsr.PDB_DL import PDB_DL
-from tsr_package.tsr.TSR import TSR
-from tsr_package.tsr.SSETSR import SSETSR
-from tsr_package.tsr.CrossTSR import CrossTSR
-from tsr_package.tsr.DrugTSR import DrugTSR
+from tsr_package.PDB_DL import PDB_DL
+from tsr_package.TSR import TSR
+from tsr_package.SSETSR import SSETSR
+from tsr_package.CrossTSR import CrossTSR
+from tsr_package.DrugTSR import DrugTSR
 
 # Use CSV input for batch processing
 data_dir = "Dataset"
